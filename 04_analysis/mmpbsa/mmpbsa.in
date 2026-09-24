@@ -1,0 +1,16 @@
+Input file for running PB and GB (FRAME1/FRAME2 are filled in by mmpbsa_array.pbs)
+&general
+   verbose=2,
+   startframe=FRAME1, endframe=FRAME2,
+   interval=1,
+   ligand_mask=':552-554',
+   receptor_mask=':1-551,555-1108',
+   netcdf=1,
+/
+&gb
+   igb=2, saltcon=0.15,
+/
+&pb
+   istrng=0.15, fillratio=4.0,
+   inp=1, radiopt=0,
+/

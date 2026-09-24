@@ -1,0 +1,37 @@
+#!/bin/bash
+# MM/PB(GB)SA over a trajectory, split into a PBS array: task i handles frames
+# (i-1)*CHUNK+1 .. i*CHUNK, so set the array size to n_frames / CHUNK.
+#
+# Submit from a directory containing mmpbsa.in, complex.parm7, receptor.parm7,
+# ligand.parm7 and the stripped trajectory (*.nc):
+#   qsub -J 1-200 -v JOB=MAA_COX,CHUNK=30 mmpbsa_array.pbs      # 6000 frames
+#   qsub -J 1-300 -v JOB=APAP_POX,CHUNK=20 mmpbsa_array.pbs     # 6000 frames
+# Results land in $PBS_O_WORKDIR/<i>_2/ (read by the analysis notebooks).
+# Optional: SCRATCH (default $EPHEMERAL), MMPBSA (default MMPBSA.py on PATH).
+#PBS -lselect=1:ncpus=2:mem=8gb
+#PBS -lwalltime=24:00:00
+
+set -euo pipefail
+: "${JOB:?pass JOB with qsub -v}" "${CHUNK:?pass CHUNK with qsub -v}"
+i=$PBS_ARRAY_INDEX
+
+workdir=${SCRATCH:-$EPHEMERAL}/$JOB/$i
+mkdir -p "$workdir"
+cd "$workdir"
+
+sed -e "s/FRAME1/$(( (i - 1) * CHUNK + 1 ))/" -e "s/FRAME2/$(( i * CHUNK ))/" \
+    "$PBS_O_WORKDIR/mmpbsa.in" > gbin.in
+
+"${MMPBSA:-MMPBSA.py}" -O \
+    -i gbin.in \
+    -o MMGBSA.dat \
+    -eo energy.csv \
+    -cp "$PBS_O_WORKDIR/complex.parm7" \
+    -rp "$PBS_O_WORKDIR/receptor.parm7" \
+    -lp "$PBS_O_WORKDIR/ligand.parm7" \
+    -y "$PBS_O_WORKDIR"/*.nc
+
+# Keep the results and _MMPBSA_info, drop the large intermediates
+rm -f ./*.nc.* ./*.pdb ./*.inpcrd reference.frc
+mkdir -p "$PBS_O_WORKDIR/${i}_2"
+cp ./* "$PBS_O_WORKDIR/${i}_2/"

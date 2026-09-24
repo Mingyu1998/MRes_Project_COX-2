@@ -1,0 +1,5 @@
+strip :WAT
+strip :Na+
+strip :Cl-
+outparm NAME_strip.parm7
+quit

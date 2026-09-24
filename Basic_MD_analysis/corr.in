@@ -1,7 +1,0 @@
-parm *.parm7
-trajin *.nc 1 last 10
-rms fit :1-1108
-matrix correl :1-1108&!@H byres out correl_3.out
-run
-exit
- 

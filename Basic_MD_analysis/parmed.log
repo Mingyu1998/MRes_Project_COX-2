@@ -1,8 +1,0 @@
-# Log started on 06/29/2022 [mm/dd/yyyy] at 14:29:41
-# Command line arguments: COX-2_HMR.parm7
-# Loaded topologies: COX-2_HMR.parm7
-strip :WAT
-strip :Na+
-strip :Cl-
-outparm COX-2_oneheme_strip.parm7
-quit

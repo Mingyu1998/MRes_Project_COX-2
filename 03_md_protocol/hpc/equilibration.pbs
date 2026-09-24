@@ -1,0 +1,17 @@
+#!/bin/bash
+# PBS job: minimisation -> heating -> equilibration on one GPU.
+# Submit from the directory holding NAME.parm7, NAME.rst7 and NAME_HMR.parm7:
+#   qsub -v NAME=MAA_POX,RESNUM=1107,PROTOCOL_DIR=/path/to/03_md_protocol \
+#        /path/to/03_md_protocol/hpc/equilibration.pbs
+# Optional: PMEMD=/path/to/pmemd.cuda_SPFP (default: pmemd.cuda_SPFP on PATH).
+# Resource lines below match Imperial RCS (RTX6000); adjust for your cluster.
+#PBS -lselect=1:ncpus=4:mem=24gb:ngpus=1:gpu_type=RTX6000
+#PBS -lwalltime=24:00:00
+
+module load cuda/9.0
+cd "$PBS_O_WORKDIR"
+
+# PBS runs a spooled copy of this script, so the protocol directory must be passed in.
+: "${NAME:?pass NAME with qsub -v}" "${RESNUM:?pass RESNUM with qsub -v}" "${PROTOCOL_DIR:?pass PROTOCOL_DIR with qsub -v}"
+export PMEMD
+"$PROTOCOL_DIR/run_equilibration.sh" "$NAME" "$RESNUM" 0
