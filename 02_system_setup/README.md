@@ -7,7 +7,7 @@ Builds the solvated COX-2 dimer + ligand systems and writes the Amber topology/c
 | Folder | What it holds |
 |---|---|
 | `common/` | Protein model and heme/iron parameters shared by every system |
-| `AA_COX/` | Arachidonic acid in the cyclooxygenase (COX) site: head-up, tail-up and one of each (`AA_double.in`) |
+| `AA_COX/` | Arachidonic acid in the cyclooxygenase (COX) site: non-productive head-up, productive tail-up, and one of each (`AA_double.in`) |
 | `APAP_COX/` | Paracetamol in the COX site (dry complex only) |
 | `APAP_POX/` | Paracetamol docked at the peroxidase (POX) site next to the heme |
 | `MAA_POX/` | 4-methylaminoantipyrine docked at the POX site |

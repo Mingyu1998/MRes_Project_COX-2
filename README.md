@@ -11,7 +11,7 @@ For each system, the ligand's stability in the binding site (distance to Tyr385 
 
 | Abbreviation | Ligand | Role |
 |---|---|---|
-| AA | Arachidonic acid | Substrate. Head-up and tail-up poses in the COX site |
+| AA | Arachidonic acid | Substrate. Productive (tail-up) and non-productive (head-up) poses in the COX site |
 | Vioxx | Rofecoxib | Selective COX-2 inhibitor (reference) |
 | APAP | Paracetamol (acetaminophen) | |
 | AM404 | *N*-arachidonoylphenolamine | Paracetamol metabolite |
@@ -37,7 +37,16 @@ The folders follow the order of the workflow. Each one has its own README.
 environment.yml               conda environment for analysis (AmberTools, pytraj, ...)
 ```
 
-Trajectories and topologies are too large for git and are not included (see `.gitignore`). The notebooks are kept with their outputs so the results can still be viewed.
+Trajectories and topologies are too large for git and are not included (see `.gitignore`). The notebooks are kept with their outputs so the results can still be viewed. Each notebook starts with a header describing the system and any corrections made since its outputs were produced.
+
+## Corrections to the original project
+
+These affect results, so check them before reusing figures from the original project:
+
+- **Heating protocol:** `Heat_2.in` never ran its final 320 → 300 K ramp because of an extra `&wt type='END'` ([details](03_md_protocol/README.md#changes-from-the-original-scripts)). Now fixed.
+- **POX-site figure:** in `05_project_summary/POX_site.ipynb`, the two AM404 lines of the ligand–heme distance plot were drawn from 4-AA data. The code is fixed; the saved figure is not, so re-run the notebook.
+- **MM/PBSA units:** two notebooks labelled the energies kJ/mol; MMPBSA.py reports kcal/mol.
+- **RMSF subplots:** the summary notebooks had the x and y axis labels swapped.
 
 ## Workflow
 
