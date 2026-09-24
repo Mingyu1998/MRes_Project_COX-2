@@ -1,0 +1,20 @@
+# Strip water/ions and re-image a 300 ns (6 x 50 ns) trajectory for analysis
+# Usage: cpptraj -i strip_traj.cpptraj   (edit the output name)
+parm *HMR.parm7
+trajin *0-50ns.nc
+trajin *50-100ns.nc
+trajin *100-150ns.nc
+trajin *150-200ns.nc
+trajin *200-250ns.nc
+trajin *250-300ns.nc
+center :3-1108 origin
+image origin center
+strip :WAT
+strip :Na+
+strip :Cl-
+center :3-1108 origin
+image origin center
+trajout 4-AA_1C_2P_0-300ns_strip.nc
+run
+exit
+

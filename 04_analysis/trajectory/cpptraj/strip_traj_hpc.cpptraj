@@ -1,0 +1,19 @@
+# Same as strip_traj.cpptraj, for segments named 1.nc ... 6.nc (older HPC runs)
+parm *HMR.parm7
+trajin 1.nc
+trajin 2.nc
+trajin 3.nc
+trajin 4.nc
+trajin 5.nc
+trajin 6.nc
+autoimage
+center :1-1104 origin
+image origin center
+strip :WAT
+strip :Na+
+strip :Cl-
+autoimage
+trajout COX-2_oneheme_0-300ns_strip.nc
+run
+exit
+
