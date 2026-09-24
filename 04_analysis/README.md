@@ -17,20 +17,20 @@ Edit the file names and residue ranges (`:1-1108` for the dimer with iron-bound 
 
 ## Trajectory notebooks (`trajectory/`)
 
-Each notebook covers a single system, using pytraj.
+Each notebook covers a single system, using pytraj. Each one opens with a header cell giving the system, the analyses, and any corrections made since its saved outputs were produced. Set `TRAJ_DIR` in the loading cell to the folder with your trajectory.
 
 | Notebook | System | Analyses |
 |---|---|---|
-| `basic_MD_traj_analysis.ipynb` | General template (with explanations) | RMSD, Rg, key distances, open/closed state cut-offs, t-tests |
-| `RMSD_Rg_COX-2.ipynb` | Apo COX-2 | RMSD, radius of gyration |
-| `empty_rep3.ipynb` | Apo COX-2, replica 3 | RMSD, per-monomer RMSF |
+| `RMSD_Rg_COX-2.ipynb` | Apo COX-2 | Backbone RMSD vs radius of gyration |
+| `apo_rep3.ipynb` | Apo COX-2, replica 3 | RMSD, per-monomer RMSF |
 | `One_heme.ipynb` | COX-2 with heme in one monomer only | RMSD, per-monomer RMSF |
-| `AA_production.ipynb` | Arachidonic acid, productive pose | RMSD, RMSF, AA–Tyr385 distance |
-| `4-AA.ipynb` | 4-aminoantipyrine | RMSD, RMSF, distances |
+| `AA_productive_rep3.ipynb` | Arachidonic acid, productive tail-up pose, replica 3 | RMSD, RMSF, AA–Tyr385 distance |
 | `AM404_COX.ipynb` | AM404 in the COX site | RMSD, RMSF, AM404–Tyr385 distance |
-| `AM404_1C_2P.ipynb` | AM404, one COX + one POX ligand | RMSD, RMSF, distances |
-| `MAA_POX_rep2.ipynb` | MAA at the POX site, replica 2 | RMSD, RMSF, MAA–Fe distance |
-| `Corr.ipynb` | Apo COX-2 | Correlation × contact weighted network, inter-monomer residue pairs |
+| `MAA_POX_rep2.ipynb` | 4-MAA at the POX site, replica 2 | RMSD, RMSF, MAA–Fe distance |
+| `4-AA_1C_2P.ipynb` | Two 4-AA: COX site + POX site | RMSD, RMSF, distances to Tyr385 and heme |
+| `AM404_1C_2P.ipynb` | Two AM404: COX site + POX site | RMSD, RMSF, distances to Tyr385 and heme |
+| `apo_correlation_network.ipynb` | Apo COX-2 | Correlation × contact weighted network, inter-monomer residue pairs |
+| `examples/rubisco_pytraj_analysis_example.ipynb` | **RuBisCO, not COX-2** | Worked pytraj example from a related project (RMSD, Rg, distance cut-offs, statistics) |
 
 ## MM/PBSA (`mmpbsa/`)
 
@@ -38,8 +38,8 @@ Each notebook covers a single system, using pytraj.
 |---|---|
 | `mmpbsa.in` | MMPBSA.py input (GB igb=2 and PB, 0.15 M salt). Set `ligand_mask`/`receptor_mask` for your system |
 | `mmpbsa_array.pbs` | Splits the trajectory into chunks over a PBS array job: `qsub -J 1-200 -v JOB=NAME,CHUNK=30 mmpbsa_array.pbs` |
-| `APAP_POX.ipynb`, `MAA_1C_2P_COX.ipynb`, `AA_COX_double_P.ipynb`, `twoheme_rep3.ipynb` | Collect the per-chunk results (`<i>_2/_MMPBSA_info`) with `MMPBSA_mods.API` and plot the ΔG decomposition over time |
+| `APAP_POX.ipynb`, `MAA_1C_2P_COX.ipynb`, `AA_COX_double_P.ipynb`, `twoheme_rep3.ipynb` | Collect the per-chunk results (`<i>_2/_MMPBSA_info`) with `load_binding_energies()`, print the mean ± SD of each term, and plot ΔE over the trajectory |
 
-The MM/PBSA notebooks `os.chdir` into absolute paths on the original laptop (`/Users/mingyu/MMPBSA/...`). Change these to where your results are.
+Set `RESULTS_DIR` at the top of each MM/PBSA notebook to the folder holding the `<i>_2/` result folders. All energies are in kcal/mol.
 
 `MMPBSA_mods` ships with AmberTools. Import it from the same Python environment that `MMPBSA.py` uses.
