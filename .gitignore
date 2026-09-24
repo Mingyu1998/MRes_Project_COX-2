@@ -1,0 +1,27 @@
+# Large simulation outputs: keep these out of git
+*.nc
+*.ncrst
+*.rst
+*.rst7
+*.parm7
+*.prmtop
+*.inpcrd
+*.mdcrd
+*.mdinfo
+*.inf
+*.chk
+*.fchk
+mdinfo
+logfile
+
+# Generated run files
+production*.sh
+production*.pbs
+*.pbs.o*
+*.pbs.e*
+_MMPBSA_*
+
+# Python / Jupyter / OS
+__pycache__/
+.ipynb_checkpoints/
+.DS_Store

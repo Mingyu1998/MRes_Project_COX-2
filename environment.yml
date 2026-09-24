@@ -1,0 +1,15 @@
+# Analysis environment: conda env create -f environment.yml
+# AmberTools provides tleap, parmed, cpptraj, pytraj and MMPBSA.py.
+# pmemd.cuda (for running MD) is licensed separately with Amber.
+name: cox2-md
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - ambertools
+  - numpy
+  - scipy
+  - pandas
+  - matplotlib
+  - seaborn
+  - jupyterlab

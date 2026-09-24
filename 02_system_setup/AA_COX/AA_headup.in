@@ -1,0 +1,63 @@
+source leaprc.protein.ff19SB
+source leaprc.gaff
+source leaprc.water.OPC
+loadamberparams frcmod.ionslm_126_opc
+addAtomTypes {
+        { "M1"  "Fe" "sp3" }
+        { "Y1"  "N" "sp3" }
+        { "Y2"  "N" "sp3" }
+        { "Y3"  "N" "sp3" }
+        { "Y4"  "N" "sp3" }
+        { "Y5"  "N" "sp3" }
+        { "Y6"  "O" "sp3" }
+}
+HD1 = loadmol2 ../common/HD1.mol2
+HD2 = loadmol2 ../common/HD2.mol2
+FE1 = loadmol2 ../common/FE1.mol2
+FE2 = loadmol2 ../common/FE2.mol2
+HH1 = loadmol2 ../common/HH1.mol2
+H21 = loadmol2 ../common/H21.mol2
+HEM = loadmol2 ../common/HEM.mol2
+HOH = loadmol2 ../common/HOH.mol2
+loadamberparams ../common/HE2.frcmod
+loadamberparams ../common/HOH.frcmod
+loadamberparams ../common/COX-2_mcpbpy.frcmod
+mol = loadpdb ../common/COX-2.pdb
+CHECK
+bond mol.3.SG mol.14.SG
+bond mol.4.SG mol.127.SG
+bond mol.8.SG mol.24.SG
+bond mol.26.SG mol.36.SG
+bond mol.537.SG mol.543.SG
+bond mol.557.SG mol.568.SG
+bond mol.558.SG mol.681.SG
+bond mol.562.SG mol.578.SG
+bond mol.580.SG mol.590.SG
+bond mol.1091.SG mol.1097.SG
+bond mol.356.NE2 mol.553.FE
+bond mol.552.NA mol.553.FE
+bond mol.552.NB mol.553.FE
+bond mol.552.NC mol.553.FE
+bond mol.552.ND mol.553.FE
+bond mol.553.FE mol.554.O
+bond mol.355.C mol.356.N
+bond mol.356.C mol.357.N
+bond mol.909.C mol.910.N
+bond mol.910.C mol.911.N
+bond mol.910.NE2 mol.1107.FE
+bond mol.1106.NA mol.1107.FE
+bond mol.1106.NB mol.1107.FE
+bond mol.1106.NC mol.1107.FE
+bond mol.1106.ND mol.1107.FE
+bond mol.1107.FE mol.1108.O
+ACD = loadmol2 ../../01_ligand_parameterisation/arachidonic_acid/ACD_headup.mol2
+loadamberparams ../../01_ligand_parameterisation/arachidonic_acid/ACD.frcmod
+complex = combine {ACD mol}
+savepdb complex AA_head_dry.pdb
+addions complex Na+ 0
+solvateBOX complex OPCBOX 20.0
+addionsrand complex Na+ 219 Cl- 219
+savepdb complex AA_head_solv.pdb
+saveamberparm complex AA_head.parm7 AA_head.rst7
+quit
+
